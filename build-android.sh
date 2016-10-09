@@ -28,12 +28,16 @@
 # -----------------------
 
 BOOST_VER1=1
-BOOST_VER2=53
+BOOST_VER2=55
 BOOST_VER3=0
-register_option "--boost=<version>" boost_version "Boost version to be used, one of {1.55.0, 1.54.0, 1.53.0, 1.49.0, 1.48.0, 1.45.0}, default is 1.53.0."
+register_option "--boost=<version>" boost_version "Boost version to be used, one of {1.59.0 1.55.0, 1.54.0, 1.53.0, 1.49.0, 1.48.0, 1.45.0}, default is 1.53.0."
 boost_version()
 {
-  if [ "$1" = "1.55.0" ]; then
+  if [ "$1" = "1.59.0" ]; then
+    BOOST_VER1=1
+    BOOST_VER2=59
+    BOOST_VER3=0
+  elif [ "$1" = "1.55.0" ]; then
     BOOST_VER1=1
     BOOST_VER2=55
     BOOST_VER3=0
@@ -206,7 +210,7 @@ elif [ -n "${AndroidSourcesDetected}" ]; then
         NDK_RELEASE_FILE="${ANDROID_BUILD_TOP}/ndk/docs/text/CHANGES.text"
         NDK_RN=`grep "android-ndk-" "${NDK_RELEASE_FILE}" | head -1 | sed 's/^.*r\(.*\)$/\1/'`
     else
-        dump "ERROR: can not find ndk version"
+        dump "ERROR: cannot find ndk version"
         exit 1
     fi
 else
@@ -261,6 +265,11 @@ case "$NDK_RN" in
 		TOOLCHAIN=${TOOLCHAIN:-arm-linux-androideabi-4.6}
 		CXXPATH=$AndroidNDKRoot/toolchains/${TOOLCHAIN}/prebuilt/${PlatformOS}-x86_64/bin/arm-linux-androideabi-g++
 		TOOLSET=gcc-androidR8e
+		;;
+	"12"|"12b")
+		TOOLCHAIN=${TOOLCHAIN:-arm-linux-androideabi-4.9}
+		CXXPATH=$AndroidNDKRoot/toolchains/${TOOLCHAIN}/prebuilt/${PlatformOS}-x86_64/bin/arm-linux-androideabi-g++
+		TOOLSET=gcc-androidR12
 		;;
 	*)
 		echo "Undefined or not supported Android NDK version!"
@@ -416,6 +425,8 @@ echo "Building boost for android"
          link=static                  \
          threading=multi              \
          --layout=versioned           \
+         --without-context            \
+         --without-coroutine          \
          --without-python             \
          -sICONV_PATH=`pwd`/../libiconv-libicu-android/armeabi \
          -sICU_PATH=`pwd`/../libiconv-libicu-android/armeabi \
