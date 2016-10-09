@@ -30,7 +30,7 @@
 BOOST_VER1=1
 BOOST_VER2=55
 BOOST_VER3=0
-register_option "--boost=<version>" boost_version "Boost version to be used, one of {1.59.0 1.55.0, 1.54.0, 1.53.0, 1.49.0, 1.48.0, 1.45.0}, default is 1.53.0."
+register_option "--boost=<version>" boost_version "Boost version to be used, one of {1.59.0 1.55.0}, default is 1.55.0."
 boost_version()
 {
   if [ "$1" = "1.59.0" ]; then
@@ -40,26 +40,6 @@ boost_version()
   elif [ "$1" = "1.55.0" ]; then
     BOOST_VER1=1
     BOOST_VER2=55
-    BOOST_VER3=0
-  elif [ "$1" = "1.54.0" ]; then
-    BOOST_VER1=1
-    BOOST_VER2=54
-    BOOST_VER3=0
-  elif [ "$1" = "1.53.0" ]; then
-    BOOST_VER1=1
-    BOOST_VER2=53
-    BOOST_VER3=0
-  elif [ "$1" = "1.49.0" ]; then
-    BOOST_VER1=1
-    BOOST_VER2=49
-    BOOST_VER3=0
-  elif [ "$1" = "1.48.0" ]; then
-    BOOST_VER1=1
-    BOOST_VER2=48
-    BOOST_VER3=0
-  elif [ "$1" = "1.45.0" ]; then
-    BOOST_VER1=1
-    BOOST_VER2=45
     BOOST_VER3=0
   else
     echo "Unsupported boost version '$1'."
@@ -221,41 +201,6 @@ fi
 echo "Detected Android NDK version $NDK_RN"
 
 case "$NDK_RN" in
-	4*)
-		TOOLCHAIN=${TOOLCHAIN:-arm-eabi-4.4.0}
-		CXXPATH=$AndroidNDKRoot/build/prebuilt/$PlatformOS-x86/${TOOLCHAIN}/bin/arm-eabi-g++
-		TOOLSET=gcc-androidR4
-		;;
-	5*)
-		TOOLCHAIN=${TOOLCHAIN:-arm-linux-androideabi-4.4.3}
-		CXXPATH=$AndroidNDKRoot/toolchains/${TOOLCHAIN}/prebuilt/$PlatformOS-x86/bin/arm-linux-androideabi-g++
-		TOOLSET=gcc-androidR5
-		;;
-	7-crystax-5.beta3)
-		TOOLCHAIN=${TOOLCHAIN:-arm-linux-androideabi-4.6.3}
-		CXXPATH=$AndroidNDKRoot/toolchains/${TOOLCHAIN}/prebuilt/$PlatformOS-x86/bin/arm-linux-androideabi-g++
-		TOOLSET=gcc-androidR7crystax5beta3
-		;;
-	8)
-		TOOLCHAIN=${TOOLCHAIN:-arm-linux-androideabi-4.4.3}
-		CXXPATH=$AndroidNDKRoot/toolchains/${TOOLCHAIN}/prebuilt/$PlatformOS-x86/bin/arm-linux-androideabi-g++
-		TOOLSET=gcc-androidR8
-		;;
-	8b|8c|8d)
-		TOOLCHAIN=${TOOLCHAIN:-arm-linux-androideabi-4.6}
-		CXXPATH=$AndroidNDKRoot/toolchains/${TOOLCHAIN}/prebuilt/$PlatformOS-x86/bin/arm-linux-androideabi-g++
-		TOOLSET=gcc-androidR8b
-		;;
-	8e|9|9b|9c|9d)
-		TOOLCHAIN=${TOOLCHAIN:-arm-linux-androideabi-4.6}
-		CXXPATH=$AndroidNDKRoot/toolchains/${TOOLCHAIN}/prebuilt/$PlatformOS-x86/bin/arm-linux-androideabi-g++
-		TOOLSET=gcc-androidR8e
-		;;
-	"8e (64-bit)")
-		TOOLCHAIN=${TOOLCHAIN:-arm-linux-androideabi-4.6}
-		CXXPATH=$AndroidNDKRoot/toolchains/${TOOLCHAIN}/prebuilt/${PlatformOS}-x86_64/bin/arm-linux-androideabi-g++
-		TOOLSET=gcc-androidR8e
-		;;
 	"9 (64-bit)"|"9b (64-bit)"|"9c (64-bit)"|"9d (64-bit)")
 		TOOLCHAIN=${TOOLCHAIN:-arm-linux-androideabi-4.6}
 		CXXPATH=$AndroidNDKRoot/toolchains/${TOOLCHAIN}/prebuilt/${PlatformOS}-x86_64/bin/arm-linux-androideabi-g++
